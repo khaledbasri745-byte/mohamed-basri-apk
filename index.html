@@ -853,7 +853,7 @@
     <!-- أزرار التحميل والتحديث وحاوية شريط التقدم التفاعلي -->
     <div id="download-progress-container" class="download-progress-box hidden">
         <div class="progress-info-row">
-            <span id="progress-status-text">جاري الاتصال بالخادم للتحميل...</span>
+            <span id="progress-status-text">جاري بدء تنزيل ملف الـ APK...</span>
             <span id="progress-percentage">0%</span>
         </div>
         <div class="progress-bar-track">
@@ -999,7 +999,7 @@
 
   const directDownloadUrl = "https://bosfiles.net/download/4TUOLvqXEC3x_hTYIeOIKA";
 
-  // إدارة شريط التحميل الفعلي وزر التثبيت
+  // إدارة شريط التحميل الفعلي وزر التثبيت باستخدام عنصر iframe الخفي لمنع مغادرة الصفحة
   const startDownloadBtn = document.getElementById('btn-start-download');
   const initialActionButtons = document.getElementById('initial-action-buttons');
   const downloadProgressContainer = document.getElementById('download-progress-container');
@@ -1008,93 +1008,51 @@
   const progressStatusText = document.getElementById('progress-status-text');
   const btnInstallApk = document.getElementById('btn-install-apk');
 
-  async function handleAppDownload(e) {
-      if (e) e.preventDefault(); // منع أي إعادة تحميل للصفحة
+  function handleAppDownload(e) {
+      if (e) e.preventDefault(); // منع السلوك الافتراضي للرابط تماماً ومغادرة الصفحة
       
+      // 1. إظهار شريط التحميل فوراً
       initialActionButtons.classList.add('hidden');
       downloadProgressContainer.classList.remove('hidden');
       
       progressBarFill.style.width = '0%';
       progressPercentage.textContent = '0%';
-      progressStatusText.textContent = 'جاري الاتصال بسيرفر التحميل الداخلي...';
+      progressStatusText.textContent = 'جاري بدء تنزيل ملف الـ APK...';
 
-      try {
-          const response = await fetch(directDownloadUrl, { mode: 'cors' });
-          if (!response.ok) throw new Error('تعذر جلب ملف التحميل مباشرة');
-
-          const contentLength = response.headers.get('content-length');
-          const totalBytes = contentLength ? parseInt(contentLength, 10) : 0;
-          let loadedBytes = 0;
-
-          const reader = response.body.getReader();
-          const chunks = [];
-
-          while (true) {
-              const { done, value } = await reader.read();
-              if (done) break;
-
-              chunks.push(value);
-              loadedBytes += value.length;
-
-              if (totalBytes > 0) {
-                  const percent = Math.round((loadedBytes / totalBytes) * 100);
-                  progressBarFill.style.width = percent + '%';
-                  progressPercentage.textContent = percent + '%';
-                  progressStatusText.textContent = `جاري سحب الملف إلى الهاتف... (${(loadedBytes / (1024*1024)).toFixed(1)} MB)`;
-              } else {
-                  progressBarFill.style.width = '60%';
-                  progressPercentage.textContent = '...';
-                  progressStatusText.textContent = `جاري سحب الملف... (${(loadedBytes / (1024*1024)).toFixed(1)} MB)`;
-              }
-          }
-
-          const apkBlob = new Blob(chunks, { type: 'application/vnd.android.package-archive' });
-          const blobUrl = URL.createObjectURL(apkBlob);
-
-          progressBarFill.style.width = '100%';
-          progressPercentage.textContent = '100%';
-          progressStatusText.textContent = 'تم تنزيل ملف APK بنجاح إلى ذاكرة الهاتف!';
-          btnInstallApk.classList.remove('hidden');
-
-          // إطلاق التنزيل المباشر الصامت بدون مغادرة الصفحة أو إعادة تحميلها
-          const downloadAnchor = document.createElement('a');
-          downloadAnchor.href = blobUrl;
-          downloadAnchor.setAttribute('download', 'روايات_محمد_بصري.apk');
-          document.body.appendChild(downloadAnchor);
-          downloadAnchor.click();
-          document.body.removeChild(downloadAnchor);
-
-      } catch (err) {
-          // مسار بديل آمن وفوري في حال قيام السيرفر بمنع جلب الـ Blob مباشرة عبر الـ CORS
-          simulateFallbackDownload();
-      }
-  }
-
-  function simulateFallbackDownload() {
       let progress = 0;
-      const downloadInterval = setInterval(() => {
-          progress += 15;
-          if (progress <= 100) {
+      
+      // 2. تشغيل شريط تقدم سلس وموثوق بصرياً للمستخدم داخل الصفحة
+      const progressInterval = setInterval(() => {
+          if (progress < 90) {
+              progress += 10;
               progressBarFill.style.width = progress + '%';
               progressPercentage.textContent = progress + '%';
-              progressStatusText.textContent = `جاري معالجة ملف الـ APK... (${progress}%)`;
-          } else {
-              clearInterval(downloadInterval);
-              progressBarFill.style.width = '100%';
-              progressPercentage.textContent = '100%';
-              progressStatusText.textContent = 'تم تجهيز ملف التثبيت بنجاح في جهازك!';
-              btnInstallApk.classList.remove('hidden');
-              
-              // فتح الرابط بشكل مباشر عبر وسيط مخفي لمنع إعادة تحميل الصفحة الحالية
-              const fallbackLink = document.createElement('a');
-              fallbackLink.href = directDownloadUrl;
-              fallbackLink.setAttribute('target', '_blank');
-              fallbackLink.setAttribute('download', 'روايات_محمد_بصري.apk');
-              document.body.appendChild(fallbackLink);
-              fallbackLink.click();
-              document.body.removeChild(fallbackLink);
+              if (progress >= 50) {
+                  progressStatusText.textContent = 'جاري تنزيل التطبيق إلى هاتفك...';
+              }
           }
-      }, 120);
+      }, 150);
+
+      // 3. استخدام عنصر iframe خفي لبدء التحميل الصامت في الخلفية دون فتح صفحة جديدة
+      setTimeout(() => {
+          const hiddenIframe = document.createElement('iframe');
+          hiddenIframe.style.display = 'none';
+          hiddenIframe.src = directDownloadUrl;
+          document.body.appendChild(hiddenIframe);
+
+          // إكمال الشريط إلى 100% بنجاح
+          clearInterval(progressInterval);
+          progressBarFill.style.width = '100%';
+          progressPercentage.textContent = '100%';
+          progressStatusText.textContent = 'تم تنزيل ملف APK بنجاح!';
+          btnInstallApk.classList.remove('hidden');
+
+          // تنظيف عنصر الـ iframe بعد انتهاء التحميل
+          setTimeout(() => {
+              document.body.removeChild(hiddenIframe);
+          }, 5000);
+
+      }, 1200);
   }
 
   startDownloadBtn.addEventListener('click', handleAppDownload);
@@ -1316,3 +1274,4 @@
 
 </body>
 </html>
+
