@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>روايات محمد بصري - تحميل التطبيق الرسمي</title>
+    <!-- خط Cairo والأيقونات -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #f97316; /* تم تغيير اللون الأساسي إلى البرتقالي */
+            --primary-hover: #ea580c; /* درجة برتقالي أغمق للتحويم */
+            --dark: #0f172a;
+            --slate: #1e293b;
+            --gray-bg: #f8fafc;
+            --border: #e2e8f0;
+            --accent: #2563eb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background: var(--gray-bg);
+            color: var(--slate);
+            line-height: 1.5;
+            padding: 15px;
+            direction: rtl;
+            text-align: right;
+            font-size: 13px;
+        }
+
+        .page-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* شريط التنقل العلوي المحترف والمطور */
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 6px 14px;
+            border-radius: 14px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            position: sticky;
+            top: 10px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .brand-icon-wrapper {
+            background: linear-gradient(135deg, #ffedd5 0%, #fed7aa 100%); /* خلفية أيقونة برتقالية فاتحة */
+            color: var(--primary);
+            width: 30px;
+            height: 30px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            box-shadow: 0 2px 8px rgba(249, 115, 22, 0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-brand:hover .brand-icon-wrapper {
+            transform: scale(1.05);
+        }
+
+        .brand-text-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-title {
+            font-weight: 900;
+            font-size: 0.8rem;
+            color: var(--dark);
+            line-height: 1.1;
+        }
+
+        .brand-subtitle {
+            font-size: 0.55rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-item-link {
+            background: transparent;
+            border: none;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 700;
+            font-size: 0.72rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            padding: 5px 9px;
+            border-radius: 8px;
+        }
+
+        .nav-item-link i {
+            font-size: 0.75rem;
+        }
+
+        .nav-item-link:hover {
+            color: var(--primary);
+            background: #f1f5f9;
+        }
+
+        .nav-divider {
+            width: 1px;
+            height: 18px;
+            background: var(--border);
+            margin: 0 1px;
+        }
+
+        .login-btn {
+            background: linear-gradient(135deg, var(--accent) 0%, #1d4ed8 100%);
+            color: #fff;
+            padding: 5px 12px;
+            border-radius: 9px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.72rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 3px 10px rgba(37, 99, 235, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .login-btn i {
+            font-size: 0.72rem;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+        }
+
+        .user-badge-nav {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            padding: 4px 10px;
+            border-radius: 9px;
+            font-weight: 700;
+            font-size: 0.72rem;
+            color: var(--dark);
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);
+        }
+
+        .logout-link {
+            color: #ef4444;
+            cursor: pointer;
+            margin-right: 4px;
+            font-size: 0.75rem;
+            transition: transform 0.2s;
+        }
+
+        .logout-link:hover {
+            transform: scale(1.1);
+        }
+
+        /* رأس الصفحة / الهيدر */
+        .hero-section {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-radius: 18px;
+            padding: 22px;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-logo {
+            width: 70px;
+            height: 70px;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #e2e8f0;
+            flex-shrink: 0;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .hero-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-info h1 {
+            margin: 0 0 6px 0;
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+
+        .hero-info p {
+            margin: 0 0 8px 0;
+            font-size: 0.85rem;
+            color: #fb923c; /* تم تغيير لون النص الفرعي في الهيدر إلى البرتقالي ليتناسب مع الهوية */
+            font-weight: 600;
+        }
+
+        .rating-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* شبكة المعلومات الإحصائية */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .stat-card {
+            background: #fff;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid var(--border);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.02);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .stat-icon {
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 6px;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .stat-value {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--slate);
+            margin-top: 3px;
+        }
+
+        /* تعديل حاوية لقطات الشاشة لتكون ممتدة بالكامل (إلغاء الحواف الجانبية) */
+        .card-container-full {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 20px 0;
+            margin-bottom: 18px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.03);
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .card-container-full h2 {
+            margin: 0 20px 14px 20px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--slate);
+        }
+
+        .screenshots-slider {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 4px 20px 12px 20px;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .screenshots-slider::-webkit-scrollbar {
+            height: 5px;
+        }
+
+        .screenshots-slider::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 8px;
+        }
+
+        .screenshots-slider img {
+            width: 140px;
+            height: 270px;
+            border-radius: 14px;
+            object-fit: contain;
+            background: #0f172a;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+            flex-shrink: 0;
+            border: 1px solid rgba(226, 232, 240, 0.6);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .screenshots-slider img:hover {
+            transform: scale(1.02);
+        }
+
+        /* الحاويات العادية (بأطراف عادية) */
+        .card-container {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 18px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.03);
+            border: 1px solid var(--border);
+        }
+
+        .content-box p {
+            font-size: 0.85rem;
+            color: #334155;
+            margin-bottom: 10px;
+        }
+
+        .content-box ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        .content-box li {
+            margin-bottom: 8px;
+            background: var(--gray-bg);
+            padding: 10px 12px;
+            border-radius: 10px;
+            border-right: 3px solid var(--primary);
+            font-size: 0.82rem;
+        }
+
+        /* نافذة عرض الصورة بشكل كامل (Lightbox Modal) */
+        .lightbox-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .lightbox-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 85vh;
+            border-radius: 12px;
+            object-fit: contain;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -45px;
+            left: 0;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .lightbox-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            z-index: 3010;
+        }
+
+        .lightbox-nav-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .lightbox-prev { right: -60px; }
+        .lightbox-next { left: -60px; }
+
+        @media (max-width: 768px) {
+            .lightbox-prev { right: 10px; background: rgba(0,0,0,0.5); }
+            .lightbox-next { left: 10px; background: rgba(0,0,0,0.5); }
+        }
+
+        /* نافذة سجل التحديثات المخصصة */
+        .updates-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .updates-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .updates-modal-card {
+            background: #ffffff;
+            width: 90%;
+            max-width: 550px;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .updates-modal-overlay.active .updates-modal-card {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        .modal-header h3 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--slate);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .close-modal-btn {
+            background: #f1f5f9;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: #64748b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .close-modal-btn:hover {
+            background: #e2e8f0;
+            color: var(--dark);
+        }
+
+        .update-item-row {
+            background: var(--gray-bg);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border);
+            border-right: 4px solid var(--accent);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .update-item-clickable {
+            cursor: pointer;
+        }
+
+        .update-item-clickable:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            background: #f1f5f9;
+        }
+
+        .update-version-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 800;
+            color: var(--slate);
+            font-size: 0.88rem;
+            margin-bottom: 4px;
+        }
+
+        .update-badge {
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.68rem;
+            font-weight: 700;
+        }
+        .badge-beta { background: #fef3c7; color: #d97706; }
+        .badge-official { background: #ffedd5; color: #c2410c; } /* شارة الإصدار الرسمي بلون برتقالي متناسق */
+
+        /* أزرار التحميل والتحديث الرئيسية */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn-main {
+            flex: 1;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            font-weight: 800;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.06);
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-download {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .btn-download:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-update {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .btn-update:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        /* قسم إضافة تقييم وتعليق */
+        .add-review-box {
+            background: var(--gray-bg);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .rating-select {
+            display: flex;
+            gap: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #cbd5e1;
+            margin-bottom: 10px;
+        }
+
+        .rating-select .star.active {
+            color: #fbbf24;
+        }
+
+        .review-textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.85rem;
+            resize: vertical;
+            min-height: 80px;
+            outline: none;
+            margin-bottom: 10px;
+            background: #fff;
+        }
+
+        .review-textarea:focus {
+            border-color: var(--primary);
+        }
+
+        .btn-submit-review {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 9px;
+            font-weight: 700;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn-submit-review:hover {
+            background: var(--primary-hover);
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin-top: 14px;
+        }
+
+        .review-card {
+            background: var(--gray-bg);
+            border-radius: 14px;
+            padding: 14px;
+            border: 1px solid var(--border);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .reviewer-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--slate);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        .footer-credit {
+            text-align: center;
+            margin-top: 25px;
+            padding: 18px;
+            border-top: 1px solid var(--border);
+            color: #64748b;
+            font-size: 0.78rem;
+        }
+
+        .footer-credit .signature {
+            font-weight: 900;
+            color: var(--dark);
+            font-size: 0.9rem;
+            margin-top: 4px;
+        }
+
+        .hidden { display: none !important; }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                flex-direction: column;
+                text-align: center;
+                padding: 18px;
+            }
+            .hero-info h1 { font-size: 1.15rem; }
+            .action-buttons { flex-direction: column; }
+            .nav-links .nav-item-link span { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-wrapper">
+
+    <!-- شريط التنقل العلوي -->
+    <nav class="top-nav">
+        <a href="#" class="nav-brand">
+            <div class="brand-icon-wrapper">
+                <i class="fa-solid fa-book-bookmark"></i>
+            </div>
+            <div class="brand-text-group">
+                <span class="brand-title">روايات محمد بصري</span>
+                <span class="brand-subtitle">الإصدار الرقمي</span>
+            </div>
+        </a>
+        
+        <div class="nav-links">
+            <button type="button" class="nav-item-link updates-trigger" id="nav-updates-btn">
+                <i class="fa-solid fa-clock-rotate-left"></i> 
+                <span>سجل التحديثات</span>
+            </button>
+            
+            <div class="nav-divider"></div>
+
+            <div id="auth-nav-container">
+                <a href="https://khaledbasri745-byte.github.io/Mohamed-Basri-login/" target="_blank" class="login-btn" id="nav-login-btn">
+                    <i class="fa-solid fa-user-lock"></i> 
+                    <span>تسجيل الدخول</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- الهيدر الرئيسي للتطبيق -->
+    <div class="hero-section">
+        <div class="hero-logo">
+            <img src="https://blogger.googleusercontent.com/img/a/AVvXsEik3WxYn3mzYz2Vu7ePQJQaE19IMhi2NKotDlAnORAMsMyQR3Mtt4kg_vdYa4xspFJAOuSU_i6FVE1wPbPbUeavXy2Y34rZrmI8M4IvGjxlr4zingfeRyVbDWbs9ad6cyAsjzQmO5_9K0T3IIeLkUJB_XPbsHFVB45srk1d09uU5I8MK2Tu5h7L8Nk4GC41" alt="Logo">
+        </div>
+        <div class="hero-info">
+            <h1>روايات محمد بصري</h1>
+            <p>مقالات فلسفية وكتب أدبية رقمية</p>
+            <div class="rating-box">
+                <span style="color:#fbbf24; font-size:0.85rem;" id="avg-stars">★★★★★</span>
+                <span style="color:#94a3b8; font-size:0.75rem; font-weight:600;" id="avg-rating-text">تقييم 5/5 (7,542 مستخدم)</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- معلومات التطبيق -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-hard-drive"></i></div>
+            <div class="stat-label">الحجم</div>
+            <div class="stat-value">16 MB</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-code-branch"></i></div>
+            <div class="stat-label">الإصدار الحالي</div>
+            <div class="stat-value">1.0 (Beta)</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-calendar-days"></i></div>
+            <div class="stat-label">تاريخ الإصدار</div>
+            <div class="stat-value">2026/06/01</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fa-solid fa-user-shield"></i></div>
+            <div class="stat-label">المطور</div>
+            <div class="stat-value">خالد بصري (KHBSR)</div>
+        </div>
+    </div>
+
+    <!-- أزرار التحميل والتحديث -->
+    <div class="action-buttons">
+        <a href="https://bosfiles.net/download/4TUOLvqXEC3x_hTYIeOIKA" target="_blank" class="btn-main btn-download">
+             <i class="fa-solid fa-download"></i> تحميل التطبيق مباشرة
+        </a>
+        <button type="button" class="btn-main btn-update" id="btn-open-updates">
+             <i class="fa-solid fa-rotate"></i> تحديث التطبيق
+        </button>
+    </div>
+
+    <!-- معرض لقطات الشاشة -->
+    <div class="card-container-full">
+        <h2>لقطات الشاشة من داخل التطبيق</h2>
+        <div class="screenshots-slider" id="screenshots-slider">
+            <img src="https://blogger.googleusercontent.com/img/a/AVvXsEh0F079vuUOjEa2YYYEl4kQendprn8Y69HI6vj-ZraeWazz9d7oqDDHKRdDxFiOR7VfFGTpGLa-s1CqB22u6YsQt6uteX-RpKJV1buldKNi_uQE1PihV3TP8krw0My5HUlZmZ1zlXRLUOZ-c0vPyUzXKyZffl4rmzszJVQNVvU9yn2SQl-_E4yCfgngwtm9" alt="شاشة 1">
+            <img src="https://blogger.googleusercontent.com/img/a/AVvXsEjoooO3065V37MZqYJsywueJMyM1ovKl8RADHUI41TeSExaV901g85awCaMJvln_l9UERZf3We6HAUZvg2Vo7treSqOdRisAcGxGkyyhYp54LY1amsRZrSECZBqWW5atHCh21x6S-LcUdfsDbQOilqemzaDC14Ml5QkjlbhVjoAr1UnltgBvaSUPwZZmI6k" alt="شاشة 2">
+            <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiA9K58jLxvUI2DRb2VS0xSak_AQ4TmUc1MVNAcBUJrJsSG-batHSn6GpKqABPJ5AJl6uOk9YZBGtrouEuaKwBGq_cYmoTKWe5G0Y7-BQ39ajEs7iupOhJJwLUWnrtjFnpfdoo_RqC53VTEosk-VST9JQCt3Q79fLMjuF_NGrpj_dJ8MaWtQtn4FGC5z9za" alt="شاشة 3">
+            <img src="https://blogger.googleusercontent.com/img/a/AVvXsEhH9XviC9eFFgzAkkt3jt3st7zLMypplf8wEKwjrPNKLZCWKlQBlMszhugXhRC9VYCIx9Ab5mPwija3gkammcH6AOKsjKyqaGq-q2sTGAjKG3sau64su3UqngsY1jLhZOTbNLDc16AsQC05WOYXi6GHUSSHh6INF2lMbaGkgAbdEeb1ZK3SfcPNnyo61veN" alt="شاشة 4">
+            <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiOIH4fapiZ7UUE45SmM5XDOrA865n4gx4w90eCleBDWoh2_xW0QoptSmZK7r828qhzE4Q-i81Majh7hg_d7aDAQTCKz3Kw4mJHVbOprLX3mgYOeotPzbYFdlKBVb-JYWnGQxp3aSynKzY0lFLNGJpPwQUYZTqn4-cbPNyvcvNPGFEdeyC07-hNmHqMKPjL" alt="شاشة 5">
+            <img src="https://blogger.googleusercontent.com/img/a/AVvXsEjh_Aazn_oQJkGPbAMQ0A__fooX-Jd5bIeWSKAeZDBgy6xWj_gMPdEpEB_ILbEr_XOgjcj6M7ynDaoNIZ6eil3xBEuIsEQLrZeTw_I1IcHIONDEMDETHoMEe9Jr5ukjKT2APj0_fur6eL4HG1l0jQ_w36IQWyqZlZmf50vGLOWT324wZ7E5rueFn9FlfEog" alt="شاشة 6">
+        </div>
+    </div>
+
+    <!-- تفاصيل ومحتوى التطبيق -->
+    <div class="card-container content-box">
+        <h2 style="margin: 0 0 14px 0;">عن التطبيق ومحتواه</h2>
+        <div style="background: var(--gray-bg); padding: 12px; border-radius: 12px; margin-bottom: 12px;">
+            <p>يأتي هذا التطبيق الثقافي والفكري كمساحة رقمية متقدمة تهدف إلى حفظ ونشر الإنتاج الأدبي والفلسفي للكاتب والباحث <strong>محمد بصري</strong>، وإتاحته للقارئ العربي بتصميم عصري وأدوات تصفح مريحة.</p>
+        </div>
+
+        <h3 style="font-size: 0.95rem; margin-bottom: 10px; color: var(--slate);">أبرز مؤلفات ومقالات التطبيق:</h3>
+        <ul>
+            <li><strong>• إيزابيل إيبرهاردت وباسيدي الفقيه:</strong> عمل يجمع بين السرد الأدبي والتحليل التاريخي العميق.</li>
+            <li><strong>• المتغطرس والذاكرة الخائنة:</strong> نص فلسفي وأدبي يناقش علاقة الإنسان بالسلطة والذات.</li>
+            <li><strong>• القرآن الكريم وفلسفات التجلي الإلهي:</strong> مقاربات عقلية وتأملية في النص القرآني الكريم.</li>
+        </ul>
+
+        <div style="background:#fff7ed; padding:12px; border-radius:10px; border:1px dashed #f97316; margin:14px 0;">
+            <strong>مميزات إضافية:</strong> يحتوي التطبيق على مكتبة تضم أكثر من 40 مقالاً متنوعاً بثلاث لغات مختلفة مع دعم كامل للوضع الليلي وخطوط واضحة.
+        </div>
+
+        <h3 style="font-size: 0.9rem; margin-top: 18px; margin-bottom: 6px;">إهداء خاص</h3>
+        <p style="font-style:italic; color:#64748b; font-size: 0.8rem;">"هذا التطبيق إهداء خالص إلى الأستاذ محمد بصري، وإلى العائلة الكريمة عائلة بصري بكل محبة واحترام واعتراف بجهودهم."</p>
+    </div>
+
+    <!-- آراء وتجارب المستخدمين -->
+    <div class="card-container">
+        <h2 style="margin: 0 0 14px 0;">آراء ومراجعات المستخدمين</h2>
+        
+        <div id="add-review-section" class="add-review-box hidden">
+            <h3 style="font-size: 0.9rem; margin-bottom: 8px; color: var(--slate);">أضف تقييمك وتعليقك حول التطبيق</h3>
+            <div class="rating-select" id="star-rating">
+                <span class="star" data-value="1">★</span>
+                <span class="star" data-value="2">★</span>
+                <span class="star" data-value="3">★</span>
+                <span class="star" data-value="4">★</span>
+                <span class="star" data-value="5">★</span>
+            </div>
+            <textarea id="review-comment-input" class="review-textarea" placeholder="اكتب رأيك أو تعليقك هنا..."></textarea>
+            <button type="button" class="btn-submit-review" id="btn-submit-review">إرسال التقييم</button>
+        </div>
+
+        <div id="login-prompt-for-review" style="background: #f1f5f9; padding: 12px; border-radius: 10px; margin-bottom: 14px; text-align: center; font-size: 0.82rem; color: #64748b;">
+            يجب <a href="https://khaledbasri745-byte.github.io/Mohamed-Basri-login/" target="_blank" style="color: var(--accent); font-weight: 700;">تسجيل الدخول</a> بحسابك لتتمكن من إضافة تقييم وتعبير عن رأيك.
+        </div>
+
+        <div class="reviews-grid" id="reviews-container"></div>
+    </div>
+
+    <!-- تذييل الصفحة -->
+    <div class="footer-credit">
+        <p>شكر خاص لكل من ساهم في إنجاز هذا العمل الثقافي والرقمي الهادف.</p>
+        <div class="signature">جميع حقوق محفوظة KHBSR © 2026</div>
+    </div>
+
+</div>
+
+<!-- نافذة عرض الصور الكاملة (Lightbox) -->
+<div class="lightbox-modal" id="lightboxModal">
+    <div class="lightbox-content">
+        <button class="lightbox-close" id="lightboxClose"><i class="fa-solid fa-xmark"></i></button>
+        <button class="lightbox-nav-btn lightbox-prev" id="lightboxPrev"><i class="fa-solid fa-chevron-right"></i></button>
+        <img id="lightboxImg" src="" alt="Full Screen View">
+        <button class="lightbox-nav-btn lightbox-next" id="lightboxNext"><i class="fa-solid fa-chevron-left"></i></button>
+    </div>
+</div>
+
+<!-- نافذة سجل التحديثات -->
+<div class="updates-modal-overlay" id="updatesModal">
+    <div class="updates-modal-card">
+        <div class="modal-header">
+            <h3><i class="fa-solid fa-code-branch" style="color: var(--accent);"></i> سجل التحديثات البرمجية</h3>
+            <button class="close-modal-btn" id="closeUpdatesModal"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 15px;">استعرض هنا الإصدارات والتحسينات المضافة لتطبيق روايات محمد بصري (انقر على الإصدار التجريبي للتحميل المباشر):</p>
+        
+        <!-- الإصدار الرسمي -->
+        <div class="update-item-row">
+            <div class="update-version-title">
+                <span>الإصدار v1.0.0 (الإصدار الرسمي)</span>
+                <span class="update-badge badge-official">مقرر 2027/12/31</span>
+            </div>
+            <p style="font-size: 0.75rem; color: #475569;">النسخة الرسمية القادمة مع تحسين ميزات عديدة، إضافة مقالات جديدة، وسرعة فائقة في استجابة قاعدة البيانات.</p>
+        </div>
+
+        <!-- إصدار بيتا (قابل للنقر للتحميل المباشر) -->
+        <div class="update-item-row update-item-clickable" id="downloadBetaVersion" style="border-right-color: #d97706;" title="انقر للتحميل المباشر">
+            <div class="update-version-title">
+                <span>الإصدار v1.0.0 (Beta) <i class="fa-solid fa-download" style="font-size: 0.75rem; color: #d97706; margin-right: 5px;"></i></span>
+                <span class="update-badge badge-beta">متاح حالياً</span>
+            </div>
+            <p style="font-size: 0.75rem; color: #475569;">النسخة التجريبية الأولى، نسخة تجريبية للتطبيق على مختلف الاجهزة بإمكانيات ضعيفة. (انقر للتحميل)</p>
+        </div>
+    </div>
+</div>
+
+<!-- Firebase & Scripts -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
+  import { getDatabase, ref, set, get, push, onValue } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAYBF_ObRjOQnt6bYbayeAyeXXdbnUnT40",
+    authDomain: "mohamed-basri.firebaseapp.com",
+    projectId: "mohamed-basri",
+    storageBucket: "mohamed-basri.firebasestorage.app",
+    messagingSenderId: "542418602383",
+    appId: "1:542418602383:web:233147885ed217d5cda3fa",
+    measurementId: "G-FT0GETN6CR"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getDatabase(app);
+
+  // رابط التحميل المباشر
+  const directDownloadUrl = "https://bosfiles.net/download/4TUOLvqXEC3x_hTYIeOIKA";
+
+  // تفعيل النقر على إصدار البيتا لفتح رابط التحميل
+  document.getElementById('downloadBetaVersion').addEventListener('click', () => {
+      window.open(directDownloadUrl, '_blank');
+  });
+
+  // نافذة التحديثات
+  const updatesModal = document.getElementById('updatesModal');
+  const btnOpenUpdates = document.getElementById('btn-open-updates');
+  const navUpdatesBtn = document.getElementById('nav-updates-btn');
+  const closeUpdatesModal = document.getElementById('closeUpdatesModal');
+
+  function toggleUpdatesModal(show) {
+      if (show) updatesModal.classList.add('active');
+      else updatesModal.classList.remove('active');
+  }
+
+  btnOpenUpdates.addEventListener('click', () => toggleUpdatesModal(true));
+  navUpdatesBtn.addEventListener('click', () => toggleUpdatesModal(true));
+  closeUpdatesModal.addEventListener('click', () => toggleUpdatesModal(false));
+  updatesModal.addEventListener('click', (e) => {
+      if (e.target === updatesModal) toggleUpdatesModal(false);
+  });
+
+  // ميزة العرض الكامل للصور (Lightbox & Slider switching)
+  const sliderImages = document.querySelectorAll('.screenshots-slider img');
+  const lightboxModal = document.getElementById('lightboxModal');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxClose = document.getElementById('lightboxClose');
+  const lightboxPrev = document.getElementById('lightboxPrev');
+  const lightboxNext = document.getElementById('lightboxNext');
+  
+  let currentIndex = 0;
+  const imagesArray = Array.from(sliderImages);
+
+  function openLightbox(index) {
+      currentIndex = index;
+      lightboxImg.src = imagesArray[currentIndex].src;
+      lightboxModal.classList.add('active');
+  }
+
+  function closeLightbox() {
+      lightboxModal.classList.remove('active');
+  }
+
+  function showNextImage() {
+      currentIndex = (currentIndex + 1) % imagesArray.length;
+      lightboxImg.src = imagesArray[currentIndex].src;
+  }
+
+  function showPrevImage() {
+      currentIndex = (currentIndex - 1 + imagesArray.length) % imagesArray.length;
+      lightboxImg.src = imagesArray[currentIndex].src;
+  }
+
+  imagesArray.forEach((img, idx) => {
+      img.addEventListener('click', () => openLightbox(idx));
+  });
+
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightboxNext.addEventListener('click', showNextImage);
+  lightboxPrev.addEventListener('click', showPrevImage);
+  lightboxModal.addEventListener('click', (e) => {
+      if (e.target === lightboxModal) closeLightbox();
+  });
+
+  // إدارة التقييمات والنجوم
+  let currentSelectedRating = 5;
+  const stars = document.querySelectorAll('.star');
+  stars.forEach(star => {
+      star.addEventListener('click', () => {
+          currentSelectedRating = parseInt(star.getAttribute('data-value'));
+          stars.forEach(s => {
+              if (parseInt(s.getAttribute('data-value')) <= currentSelectedRating) {
+                  s.classList.add('active');
+              } else {
+                  s.classList.remove('active');
+              }
+          });
+      });
+  });
+  stars.forEach(s => s.classList.add('active'));
+
+  onAuthStateChanged(auth, async (user) => {
+      const authNavContainer = document.getElementById('auth-nav-container');
+      const addReviewSection = document.getElementById('add-review-section');
+      const loginPromptForReview = document.getElementById('login-prompt-for-review');
+
+      if (user) {
+          let userName = user.displayName || "مستخدم";
+          try {
+              const userSnap = await get(ref(db, 'users/' + user.uid));
+              if (userSnap.exists() && userSnap.val().name) {
+                  userName = userSnap.val().name;
+              }
+          } catch(e) {}
+
+          authNavContainer.innerHTML = `
+            <div class="user-badge-nav">
+                <i class="fa-solid fa-circle-user" style="color: var(--primary);"></i> <span>${userName}</span>
+                <span class="logout-link" id="btn-logout" title="تسجيل الخروج"><i class="fa-solid fa-right-from-bracket"></i></span>
+            </div>
+          `;
+
+          document.getElementById('btn-logout').addEventListener('click', async () => {
+              await signOut(auth);
+              window.location.reload();
+          });
+
+          addReviewSection.classList.remove('hidden');
+          loginPromptForReview.classList.add('hidden');
+      } else {
+          authNavContainer.innerHTML = `
+            <a href="https://khaledbasri745-byte.github.io/Mohamed-Basri-login/" target="_blank" class="login-btn">
+                <i class="fa-solid fa-user-lock"></i> <span>تسجيل الدخول</span>
+            </a>
+          `;
+          addReviewSection.classList.add('hidden');
+          loginPromptForReview.classList.remove('hidden');
+      }
+  });
+
+  document.getElementById('btn-submit-review').addEventListener('click', async () => {
+      const user = auth.currentUser;
+      if (!user) {
+          alert("يجب تسجيل الدخول أولاً!");
+          return;
+      }
+
+      const commentInput = document.getElementById('review-comment-input');
+      const commentText = commentInput.value.trim();
+
+      if (!commentText) {
+          alert("يرجى كتابة تعليق أو رأي قبل الإرسال.");
+          return;
+      }
+
+      let userName = user.displayName || "مستخدم";
+      try {
+          const userSnap = await get(ref(db, 'users/' + user.uid));
+          if (userSnap.exists() && userSnap.val().name) {
+              userName = userSnap.val().name;
+          }
+      } catch(e) {}
+
+      const newReview = {
+          name: userName,
+          rating: currentSelectedRating,
+          comment: commentText,
+          platform: "عبر التطبيق",
+          timestamp: Date.now()
+      };
+
+      try {
+          await push(ref(db, 'appReviews'), newReview);
+          commentInput.value = "";
+          alert("شكراً لك! تم إضافة تقييمك وتعليقك بنجاح.");
+      } catch (err) {
+          alert("حدث خطأ أثناء إرسال التقييم. حاول مجدداً.");
+      }
+  });
+
+  const defaultReviews = [
+      { name: "أحمد براهيمي", platform: "فيسبوك", comment: "تطبيق مذهل حقاً! أفضل تجربة قراءة حصلت عليها.", rating: 5 },
+      { name: "سارة مصمودي", platform: "إنستغرام", comment: "التصميم أنيق جداً والقراءة مريحة للعين.", rating: 5 },
+      { name: "عمر بختي", platform: "تويتر", comment: "محتوى فلسفي عميق بأسلوب رقمي عصري.", rating: 5 },
+      { name: "ليلى مباركي", platform: "تيك توك", comment: "فخورون بهذا العمل الثقافي الرائع والمميز.", rating: 5 },
+      { name: "ياسين محمودي", platform: "فيسبوك", comment: "شكراً للمطور خالد بصري على هذا المجهود الجبار.", rating: 5 }
+  ];
+
+  const reviewsContainer = document.getElementById('reviews-container');
+
+  function renderAllReviews(firebaseReviewsObj) {
+      reviewsContainer.innerHTML = "";
+      let allReviewsList = [...defaultReviews];
+
+      if (firebaseReviewsObj) {
+          Object.values(firebaseReviewsObj).forEach(rev => {
+              allReviewsList.unshift(rev);
+          });
+      }
+
+      allReviewsList.forEach(rev => {
+          let starsHTML = "";
+          for (let i = 0; i < 5; i++) {
+              starsHTML += i < rev.rating ? "★" : "☆";
+          }
+
+          const reviewHTML = `
+              <div class="review-card">
+                  <div class="review-header">
+                      <div class="reviewer-avatar">${rev.name[0]}</div>
+                      <div>
+                          <div style="font-weight: 700; font-size: 0.8rem;">${rev.name} <span style="font-size: 0.65rem; color: #64748b; font-weight: 400;">(${rev.platform || 'عبر التطبيق'})</span></div>
+                          <div style="color: #fbbf24; font-size: 0.72rem;">${starsHTML}</div>
+                      </div>
+                  </div>
+                  <p style="font-size: 0.78rem; color: var(--slate); margin: 0;">${rev.comment}</p>
+              </div>
+          `;
+          reviewsContainer.innerHTML += reviewHTML;
+      });
+  }
+
+  onValue(ref(db, 'appReviews'), (snapshot) => {
+      renderAllReviews(snapshot.val());
+  }, (error) => {
+      renderAllReviews(null);
+  });
+</script>
+
+</body>
+</html>
