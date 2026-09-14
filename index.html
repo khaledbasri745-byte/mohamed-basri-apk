@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>روايات محمد بصري - تحميل التطبيق الرسمي</title>
+    <meta name="google-site-verification" content="ahC6ifjUUyweB-SEzZmzfP97YMn35yX28X_8KmVZ37I" />
+    <meta name="description" content="تطبيق روايات محمد بصري الرقمي - منصة ثقافية وفكرية تهدف إلى حفظ ونشر الإنتاج الأدبي والفلسفي للكاتب والباحث محمد بصري، مع دعم كامل للوضع الليلي وكتب ومقالات متنوعة." />
+    <meta property="og:title" content="روايات محمد بصري - تحميل التطبيق الرسمي" />
+    <meta property="og:description" content="مقالات فلسفية وكتب أدبية رقمية، وتجربة قراءة عصرية ومريحة." />
+    <meta property="og:image" content="https://blogger.googleusercontent.com/img/a/AVvXsEik3WxYn3mzYz2Vu7ePQJQaE19IMhi2NKotDlAnORAMsMyQR3Mtt4kg_vdYa4xspFJAOuSU_i6FVE1wPbPbUeavXy2Y34rZrmI8M4IvGjxlr4zingfeRyVbDWbs9ad6cyAsjzQmO5_9K0T3IIeLkUJB_XPbsHFVB45srk1d09uU5I8MK2Tu5h7L8Nk4GC41" />
     <!-- خط Cairo والأيقونات -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -648,7 +653,7 @@
             background: #e2e8f0;
             border-radius: 5px;
             overflow: hidden;
-            margin-bottom: 12px;
+            margin-bottom: 4px;
         }
 
         .progress-bar-fill {
@@ -859,9 +864,6 @@
         <div class="progress-bar-track">
             <div id="progress-bar-fill" class="progress-bar-fill"></div>
         </div>
-        <button type="button" id="btn-install-apk" class="btn-main hidden" style="background: #10b981; color: #fff; width: 100%; margin-top: 5px;">
-            <i class="fa-solid fa-download"></i> فتح التنزيلات (Downloads) في المتصفح
-        </button>
     </div>
 
     <div class="action-buttons" id="initial-action-buttons">
@@ -1005,7 +1007,6 @@
   const progressBarFill = document.getElementById('progress-bar-fill');
   const progressPercentage = document.getElementById('progress-percentage');
   const progressStatusText = document.getElementById('progress-status-text');
-  const btnInstallApk = document.getElementById('btn-install-apk');
 
   function handleAppDownload(e) {
       if (e) e.preventDefault();
@@ -1039,8 +1040,7 @@
           clearInterval(progressInterval);
           progressBarFill.style.width = '100%';
           progressPercentage.textContent = '100%';
-          progressStatusText.textContent = 'تم تنزيل ملف التطبيق بنجاح في المتصفح!';
-          btnInstallApk.classList.remove('hidden');
+          progressStatusText.innerHTML = '<i class="fa-solid fa-circle-check" style="color: #10b981; margin-left: 5px;"></i> بدأ تحميل الملف بنجاح في بيانات وتنزيلات المتصفح!';
 
           setTimeout(() => {
               document.body.removeChild(hiddenIframe);
@@ -1053,12 +1053,6 @@
   document.getElementById('downloadBetaVersion').addEventListener('click', (e) => {
       toggleUpdatesModal(false);
       handleAppDownload(e);
-  });
-
-  // فتح صفحة التنزيلات في المتصفح تلقائياً عند النقر على الزر
-  btnInstallApk.addEventListener('click', (e) => {
-      e.preventDefault();
-      window.location.href = 'chrome://downloads/';
   });
 
   // نافذة التحديثات
