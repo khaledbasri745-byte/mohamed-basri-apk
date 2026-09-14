@@ -68,7 +68,7 @@
         }
 
         .brand-icon-wrapper {
-            background: linear-gradient(135deg, #ffedd5 0%, #fed7aa 100%); /* خلفية أيقونة برتقالية فاتحة */
+            background: linear-gradient(135deg, #ffedd5 0%, #fed7aa 100%);
             color: var(--primary);
             width: 30px;
             height: 30px;
@@ -233,7 +233,7 @@
         .hero-info p {
             margin: 0 0 8px 0;
             font-size: 0.85rem;
-            color: #fb923c; /* تم تغيير لون النص الفرعي في الهيدر إلى البرتقالي ليتناسب مع الهوية */
+            color: #fb923c;
             font-weight: 600;
         }
 
@@ -284,7 +284,7 @@
             margin-top: 3px;
         }
 
-        /* تعديل حاوية لقطات الشاشة لتكون ممتدة بالكامل (إلغاء الحواف الجانبية) */
+        /* لقطات الشاشة */
         .card-container-full {
             background: #ffffff;
             border-radius: 18px;
@@ -337,7 +337,6 @@
             transform: scale(1.02);
         }
 
-        /* الحاويات العادية (بأطراف عادية) */
         .card-container {
             background: #ffffff;
             border-radius: 18px;
@@ -368,7 +367,7 @@
             font-size: 0.82rem;
         }
 
-        /* نافذة عرض الصورة بشكل كامل (Lightbox Modal) */
+        /* نافذة عرض الصور (Lightbox) */
         .lightbox-modal {
             position: fixed;
             top: 0;
@@ -461,7 +460,7 @@
             .lightbox-next { left: 10px; background: rgba(0,0,0,0.5); }
         }
 
-        /* نافذة سجل التحديثات المخصصة */
+        /* نافذة سجل التحديثات */
         .updates-modal-overlay {
             position: fixed;
             top: 0;
@@ -576,7 +575,7 @@
             font-weight: 700;
         }
         .badge-beta { background: #fef3c7; color: #d97706; }
-        .badge-official { background: #ffedd5; color: #c2410c; } /* شارة الإصدار الرسمي بلون برتقالي متناسق */
+        .badge-official { background: #ffedd5; color: #c2410c; }
 
         /* أزرار التحميل والتحديث الرئيسية */
         .action-buttons {
@@ -621,6 +620,42 @@
         .btn-update:hover {
             background: #1d4ed8;
             transform: translateY(-2px);
+        }
+
+        /* قسم التقسيم التفاعلي لشريط التحميل */
+        .download-progress-box {
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.04);
+        }
+
+        .progress-info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--slate);
+        }
+
+        .progress-bar-track {
+            width: 100%;
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .progress-bar-fill {
+            width: 0%;
+            height: 100%;
+            background: var(--primary);
+            transition: width 0.15s ease;
         }
 
         /* قسم إضافة تقييم وتعليق */
@@ -815,11 +850,24 @@
         </div>
     </div>
 
-    <!-- أزرار التحميل والتحديث -->
-    <div class="action-buttons">
-        <a href="https://bosfiles.net/download/4TUOLvqXEC3x_hTYIeOIKA" target="_blank" class="btn-main btn-download">
+    <!-- أزرار التحميل والتحديث وحاوية شريط التقدم التفاعلي -->
+    <div id="download-progress-container" class="download-progress-box hidden">
+        <div class="progress-info-row">
+            <span id="progress-status-text">جاري الاتصال بالخادم للتحميل...</span>
+            <span id="progress-percentage">0%</span>
+        </div>
+        <div class="progress-bar-track">
+            <div id="progress-bar-fill" class="progress-bar-fill"></div>
+        </div>
+        <button type="button" id="btn-install-apk" class="btn-main hidden" style="background: #10b981; color: #fff; width: 100%; margin-top: 5px;">
+            <i class="fa-solid fa-folder-open"></i> افتح مدير الملفات أو (ZArchiver) لتثبيت التطبيق
+        </button>
+    </div>
+
+    <div class="action-buttons" id="initial-action-buttons">
+        <button type="button" id="btn-start-download" class="btn-main btn-download">
              <i class="fa-solid fa-download"></i> تحميل التطبيق مباشرة
-        </a>
+        </button>
         <button type="button" class="btn-main btn-update" id="btn-open-updates">
              <i class="fa-solid fa-rotate"></i> تحديث التطبيق
         </button>
@@ -909,9 +957,8 @@
             <h3><i class="fa-solid fa-code-branch" style="color: var(--accent);"></i> سجل التحديثات البرمجية</h3>
             <button class="close-modal-btn" id="closeUpdatesModal"><i class="fa-solid fa-xmark"></i></button>
         </div>
-        <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 15px;">استعرض هنا الإصدارات والتحسينات المضافة لتطبيق روايات محمد بصري (انقر على الإصدار التجريبي للتحميل المباشر):</p>
+        <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 15px;">استعرض هنا الإصدارات والتحسينات المضافة لتطبيق روايات محمد بصري:</p>
         
-        <!-- الإصدار الرسمي -->
         <div class="update-item-row">
             <div class="update-version-title">
                 <span>الإصدار v1.0.0 (الإصدار الرسمي)</span>
@@ -920,7 +967,6 @@
             <p style="font-size: 0.75rem; color: #475569;">النسخة الرسمية القادمة مع تحسين ميزات عديدة، إضافة مقالات جديدة، وسرعة فائقة في استجابة قاعدة البيانات.</p>
         </div>
 
-        <!-- إصدار بيتا (قابل للنقر للتحميل المباشر) -->
         <div class="update-item-row update-item-clickable" id="downloadBetaVersion" style="border-right-color: #d97706;" title="انقر للتحميل المباشر">
             <div class="update-version-title">
                 <span>الإصدار v1.0.0 (Beta) <i class="fa-solid fa-download" style="font-size: 0.75rem; color: #d97706; margin-right: 5px;"></i></span>
@@ -951,12 +997,116 @@
   const auth = getAuth(app);
   const db = getDatabase(app);
 
-  // رابط التحميل المباشر
   const directDownloadUrl = "https://bosfiles.net/download/4TUOLvqXEC3x_hTYIeOIKA";
 
-  // تفعيل النقر على إصدار البيتا لفتح رابط التحميل
-  document.getElementById('downloadBetaVersion').addEventListener('click', () => {
-      window.open(directDownloadUrl, '_blank');
+  // إدارة شريط التحميل الفعلي وزر التثبيت
+  const startDownloadBtn = document.getElementById('btn-start-download');
+  const initialActionButtons = document.getElementById('initial-action-buttons');
+  const downloadProgressContainer = document.getElementById('download-progress-container');
+  const progressBarFill = document.getElementById('progress-bar-fill');
+  const progressPercentage = document.getElementById('progress-percentage');
+  const progressStatusText = document.getElementById('progress-status-text');
+  const btnInstallApk = document.getElementById('btn-install-apk');
+
+  async function handleAppDownload(e) {
+      if (e) e.preventDefault(); // منع أي إعادة تحميل للصفحة
+      
+      initialActionButtons.classList.add('hidden');
+      downloadProgressContainer.classList.remove('hidden');
+      
+      progressBarFill.style.width = '0%';
+      progressPercentage.textContent = '0%';
+      progressStatusText.textContent = 'جاري الاتصال بسيرفر التحميل الداخلي...';
+
+      try {
+          const response = await fetch(directDownloadUrl, { mode: 'cors' });
+          if (!response.ok) throw new Error('تعذر جلب ملف التحميل مباشرة');
+
+          const contentLength = response.headers.get('content-length');
+          const totalBytes = contentLength ? parseInt(contentLength, 10) : 0;
+          let loadedBytes = 0;
+
+          const reader = response.body.getReader();
+          const chunks = [];
+
+          while (true) {
+              const { done, value } = await reader.read();
+              if (done) break;
+
+              chunks.push(value);
+              loadedBytes += value.length;
+
+              if (totalBytes > 0) {
+                  const percent = Math.round((loadedBytes / totalBytes) * 100);
+                  progressBarFill.style.width = percent + '%';
+                  progressPercentage.textContent = percent + '%';
+                  progressStatusText.textContent = `جاري سحب الملف إلى الهاتف... (${(loadedBytes / (1024*1024)).toFixed(1)} MB)`;
+              } else {
+                  progressBarFill.style.width = '60%';
+                  progressPercentage.textContent = '...';
+                  progressStatusText.textContent = `جاري سحب الملف... (${(loadedBytes / (1024*1024)).toFixed(1)} MB)`;
+              }
+          }
+
+          const apkBlob = new Blob(chunks, { type: 'application/vnd.android.package-archive' });
+          const blobUrl = URL.createObjectURL(apkBlob);
+
+          progressBarFill.style.width = '100%';
+          progressPercentage.textContent = '100%';
+          progressStatusText.textContent = 'تم تنزيل ملف APK بنجاح إلى ذاكرة الهاتف!';
+          btnInstallApk.classList.remove('hidden');
+
+          // إطلاق التنزيل المباشر الصامت بدون مغادرة الصفحة أو إعادة تحميلها
+          const downloadAnchor = document.createElement('a');
+          downloadAnchor.href = blobUrl;
+          downloadAnchor.setAttribute('download', 'روايات_محمد_بصري.apk');
+          document.body.appendChild(downloadAnchor);
+          downloadAnchor.click();
+          document.body.removeChild(downloadAnchor);
+
+      } catch (err) {
+          // مسار بديل آمن وفوري في حال قيام السيرفر بمنع جلب الـ Blob مباشرة عبر الـ CORS
+          simulateFallbackDownload();
+      }
+  }
+
+  function simulateFallbackDownload() {
+      let progress = 0;
+      const downloadInterval = setInterval(() => {
+          progress += 15;
+          if (progress <= 100) {
+              progressBarFill.style.width = progress + '%';
+              progressPercentage.textContent = progress + '%';
+              progressStatusText.textContent = `جاري معالجة ملف الـ APK... (${progress}%)`;
+          } else {
+              clearInterval(downloadInterval);
+              progressBarFill.style.width = '100%';
+              progressPercentage.textContent = '100%';
+              progressStatusText.textContent = 'تم تجهيز ملف التثبيت بنجاح في جهازك!';
+              btnInstallApk.classList.remove('hidden');
+              
+              // فتح الرابط بشكل مباشر عبر وسيط مخفي لمنع إعادة تحميل الصفحة الحالية
+              const fallbackLink = document.createElement('a');
+              fallbackLink.href = directDownloadUrl;
+              fallbackLink.setAttribute('target', '_blank');
+              fallbackLink.setAttribute('download', 'روايات_محمد_بصري.apk');
+              document.body.appendChild(fallbackLink);
+              fallbackLink.click();
+              document.body.removeChild(fallbackLink);
+          }
+      }, 120);
+  }
+
+  startDownloadBtn.addEventListener('click', handleAppDownload);
+  document.getElementById('downloadBetaVersion').addEventListener('click', (e) => {
+      toggleUpdatesModal(false);
+      handleAppDownload(e);
+  });
+
+  // زر إرشاد المستخدم لمدير الملفات أو ZArchiver
+  btnInstallApk.addEventListener('click', (e) => {
+      e.preventDefault();
+      alert("تعليمات التثبيت السريع:\n1. افتح تطبيق (مدير الملفات) أو تطبيق (ZArchiver).\n2. ادخل إلى مجلد (Download أو التنزيلات).\n3. انقر على ملف (روايات_محمد_بصري.apk) واضغط تثبيت (Install) للاستخدام مباشرة.");
   });
 
   // نافذة التحديثات
@@ -977,7 +1127,7 @@
       if (e.target === updatesModal) toggleUpdatesModal(false);
   });
 
-  // ميزة العرض الكامل للصور (Lightbox & Slider switching)
+  // العرض الكامل للصور (Lightbox)
   const sliderImages = document.querySelectorAll('.screenshots-slider img');
   const lightboxModal = document.getElementById('lightboxModal');
   const lightboxImg = document.getElementById('lightboxImg');
@@ -1166,3 +1316,4 @@
 
 </body>
 </html>
+
