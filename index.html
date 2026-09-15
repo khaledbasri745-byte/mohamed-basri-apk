@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>روايات محمد بصري - تحميل التطبيق الرسمي</title>
     <meta name="google-site-verification" content="ahC6ifjUUyweB-SEzZmzfP97YMn35yX28X_8KmVZ37I" />
-    <meta name="description" content="تطبيق روايات محمد بصري الرقمي - منصة ثقافية وفكرية تهدف إلى حفظ ونشر الإنتاج الأدبي والفلسفي للكاتب والباحث محمد بصري، مع دعم كامل للوضع الليلي وكتب ومقالات متنوعة." />
+    <meta name="description" content="تطبيق روايات محمد بصري الرقمي - منصة ثقافية وفكرية تهدف إلى حفظ ونشر الإنتاج الأدبي والفلسفي للكاتب والباحث محمد بصري، مع دعم كامل للكتب ومقالات المتنوعة." />
     <meta property="og:title" content="روايات محمد بصري - تحميل التطبيق الرسمي" />
     <meta property="og:description" content="مقالات فلسفية وكتب أدبية رقمية، وتجربة قراءة عصرية ومريحة." />
     <meta property="og:image" content="https://blogger.googleusercontent.com/img/a/AVvXsEik3WxYn3mzYz2Vu7ePQJQaE19IMhi2NKotDlAnORAMsMyQR3Mtt4kg_vdYa4xspFJAOuSU_i6FVE1wPbPbUeavXy2Y34rZrmI8M4IvGjxlr4zingfeRyVbDWbs9ad6cyAsjzQmO5_9K0T3IIeLkUJB_XPbsHFVB45srk1d09uU5I8MK2Tu5h7L8Nk4GC41" />
@@ -15,8 +15,8 @@
     
     <style>
         :root {
-            --primary: #f97316; /* تم تغيير اللون الأساسي إلى البرتقالي */
-            --primary-hover: #ea580c; /* درجة برتقالي أغمق للتحويم */
+            --primary: #f97316;
+            --primary-hover: #ea580c;
             --dark: #0f172a;
             --slate: #1e293b;
             --gray-bg: #f8fafc;
@@ -287,6 +287,76 @@
             font-weight: 800;
             color: var(--slate);
             margin-top: 3px;
+        }
+
+        /* قسم صندوق النسخة التجريبية وكود النسخ الاحترافي */
+        .beta-box {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border: 1px solid #fcd34d;
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 18px;
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.08);
+        }
+
+        .beta-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .beta-title {
+            font-size: 1rem;
+            font-weight: 800;
+            color: #92400e;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .code-container {
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 10px;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.4);
+        }
+
+        .code-text {
+            font-family: monospace;
+            color: #38bdf8;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            word-break: break-all;
+        }
+
+        .copy-btn {
+            background: #f59e0b;
+            color: #fff;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s, transform 0.2s;
+            flex-shrink: 0;
+        }
+
+        .copy-btn:hover {
+            background: #d97706;
+            transform: scale(1.02);
+        }
+
+        .copy-btn.copied {
+            background: #10b981;
         }
 
         /* لقطات الشاشة */
@@ -780,6 +850,7 @@
             .hero-info h1 { font-size: 1.15rem; }
             .action-buttons { flex-direction: column; }
             .nav-links .nav-item-link span { display: none; }
+            .code-container { flex-direction: column; gap: 10px; align-items: stretch; text-align: center; }
         }
     </style>
 </head>
@@ -852,6 +923,23 @@
             <div class="stat-icon"><i class="fa-solid fa-user-shield"></i></div>
             <div class="stat-label">المطور</div>
             <div class="stat-value">خالد بصري (KHBSR)</div>
+        </div>
+    </div>
+
+    <!-- قسم النسخة التجريبية (Beta) مع خاصية نسخ الكود الاحترافية -->
+    <div class="beta-box">
+        <div class="beta-header">
+            <div class="beta-title">
+                <i class="fa-solid fa-flask"></i> فتح النسخة التجريبية المباشرة (Beta v1.0)
+            </div>
+            <span class="update-badge badge-beta">متاح للتجربة</span>
+        </div>
+        <p style="font-size: 0.8rem; color: #78350f; margin-bottom: 8px;">استخدم كود التنشيط التجريبي أدناه أو انسخه لتفعيله داخل بيئة التطبيق المحمولة:</p>
+        <div class="code-container">
+            <span class="code-text" id="betaCodeText">MB6908beta@KhBsr745</span>
+            <button type="button" class="copy-btn" id="copyCodeBtn">
+                <i class="fa-regular fa-copy"></i> نسخ الكود
+            </button>
         </div>
     </div>
 
@@ -1053,6 +1141,24 @@
   document.getElementById('downloadBetaVersion').addEventListener('click', (e) => {
       toggleUpdatesModal(false);
       handleAppDownload(e);
+  });
+
+  // كود نسخ النص التجريبي بضغطة زر
+  const copyCodeBtn = document.getElementById('copyCodeBtn');
+  const betaCodeText = document.getElementById('betaCodeText');
+
+  copyCodeBtn.addEventListener('click', () => {
+      const codeToCopy = betaCodeText.textContent;
+      navigator.clipboard.writeText(codeToCopy).then(() => {
+          copyCodeBtn.innerHTML = '<i class="fa-solid fa-check"></i> تم النسخ!';
+          copyCodeBtn.classList.add('copied');
+          setTimeout(() => {
+              copyCodeBtn.innerHTML = '<i class="fa-regular fa-copy"></i> نسخ الكود';
+              copyCodeBtn.classList.remove('copied');
+          }, 2000);
+      }).catch(err => {
+          alert('تعذر نسخ الكود تلقائياً.');
+      });
   });
 
   // نافذة التحديثات
